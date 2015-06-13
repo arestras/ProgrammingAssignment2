@@ -9,27 +9,27 @@
 
 makeCacheMatrix <- function(x = matrix()) {
     
-    inverse <- matrix(data = NA, nrow = nrow(x), ncol = ncol(x))
+    inverse <- matrix(data = NA, nrow = nrow(x), ncol = ncol(x))            ## Creates an empty matrix for the inverse of x
     
-    get <- function() {
+    get <- function() {                                                     ## Returns the stored value for the matrix x
         x
     }
     
-    change <- function(y = matrix()) {
+    change <- function(y = matrix()) {                                      ## Changes the values of matrix on user input
         x <<- y
         inverse <<- matrix(data = NA, nrow = nrow(x), ncol = ncol(x))
-        
     }
     
-    getinverse <- function() {
+    getinverse <- function() {                                              ## Stores the inverse
         inverse
     }
     
-    setinverse <- function(z = matrix()) {
+    setinverse <- function(z = matrix()) {                                  ## User input of inverse is possible for caching
         inverse <<- z
     }
     
-    list(get = get, change = change, setinverse = setinverse, getinverse = getinverse)
+    list(get = get, change = change, setinverse = setinverse, 
+         getinverse = getinverse)
     
 }
 
@@ -40,13 +40,12 @@ makeCacheMatrix <- function(x = matrix()) {
 ## above funtion is returned.
 
 cacheSolve <- function(x) {
-    ## Return a matrix that is the inverse of 'x'
-    inverse <- x$getinverse()
-    if(!anyNA(inverse)) {
+    inverse <- x$getinverse()                                               ## Gets the inverse
+    if(!anyNA(inverse)) {                                                   ## If inverse matrix does not have NA, returns
         message("Getting cached data")
         return(inverse)
     }
-    inverse <- solve(x$get())
+    inverse <- solve(x$get())                                               ## If inverse matrix has NA, inverse calculated
     x$setinverse(inverse)
     inverse
     
