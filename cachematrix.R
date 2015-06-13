@@ -15,16 +15,16 @@ makeCacheMatrix <- function(x = matrix()) {
         x
     }
     
-    change <- function(y = matrix()) {                                      ## Changes the values of matrix on user input
+    change <- function(y = matrix()) {                                      ## User can change the matrix x
         x <<- y
-        inverse <<- matrix(data = NA, nrow = nrow(x), ncol = ncol(x))
+        inverse <<- matrix(data = NA, nrow = nrow(x), ncol = ncol(x))       ## Resets to an empty matrix the inverse of x
     }
     
     getinverse <- function() {                                              ## Stores the inverse
         inverse
     }
     
-    setinverse <- function(z = matrix()) {                                  ## User input of inverse is possible for caching
+    setinverse <- function(z = matrix()) {                                  ## User can input and store the inverse of x
         inverse <<- z
     }
     
@@ -40,13 +40,14 @@ makeCacheMatrix <- function(x = matrix()) {
 ## above funtion is returned.
 
 cacheSolve <- function(x) {
-    inverse <- x$getinverse()                                               ## Gets the inverse
-    if(!anyNA(inverse)) {                                                   ## If inverse matrix does not have NA, returns
-        message("Getting cached data")
-        return(inverse)
+
+    inverse <- x$getinverse()                                               ## Gets the inverse from makeCacheMatrix
+    if(!anyNA(inverse)) {                                                   ## If inverse matrix is not empty,
+        message("Getting cached data")                                      ## intimates the user about the cached inverse,
+        return(inverse)                                                     ## and returns the cached inverse
     }
     inverse <- solve(x$get())                                               ## If inverse matrix has NA, inverse calculated
-    x$setinverse(inverse)
-    inverse
+    x$setinverse(inverse)                                                   ## inverse stored in makeCacheMatrix 
+    inverse                                                                 ## inverse of matrix x is printed
     
 }
